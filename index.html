@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>Expense Tracker</h1>
+
+    <div class="container">
+      <h2>
+        Your balence:
+        <div id="balence">£0.00</div>
+      </h2>
+
+      <div id="inc-exp-container">
+        <div>
+          <h4>Income</h4>
+          <p id="money-plus" class="money">+£0.00</p>
+        </div>
+        <div>
+          <h4>Expense</h4>
+          <p id="money-minus" class="money">-£0.00</p>
+        </div>
+      </div>
+
+      <h2>History</h2>
+      <ul id="list"></ul>
+
+      <h2>Add new transaction</h2>
+      <form id="form">
+        <div class="form-control">
+          <label for="text">Text</label>
+          <input
+            id="text"
+            placeholder="Enter transaction details..."
+            type="text"
+          />
+        </div>
+
+        <div class="form-control">
+          <label for="amount"
+            >Amount <br />
+            (negative - expense, positive - income)</label
+          >
+          <input
+            id="amount"
+            placeholder="Enter transaction amount..."
+            type="number"
+          />
+        </div>
+
+        <button id="btn">Add transaction</button>
+      </form>
+    </div>
+  </body>
+</html>
