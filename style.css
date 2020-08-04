@@ -142,6 +142,13 @@ input {
   width: 100%;
 }
 
+#error {
+  color: var(--red);
+  display: none;
+  font-weight: bold;
+  text-align: center;
+}
+
 #btn {
   background-color: var(--button);
   border: 0;

@@ -1,19 +1,44 @@
-const balance = document.getElementById('balance');
-const money_plus = document.getElementById('money-plus');
-const money_minus = document.getElementById('money-minus');
-const list = document.getElementById('list');
-const form = document.getElementById('form');
-const text = document.getElementById('text');
 const amount = document.getElementById('amount');
+const balance = document.getElementById('balance');
+const error = document.getElementById('error');
+const form = document.getElementById('form');
+const list = document.getElementById('list');
+const money_minus = document.getElementById('money-minus');
+const money_plus = document.getElementById('money-plus');
+const text = document.getElementById('text');
 
 const dummyTransactions = [
-  { id: 1, text: 'Flower', amount: -20 },
+  { id: 1, text: 'Flower', amount: -19.99 },
   { id: 2, text: 'Salary', amount: 300 },
   { id: 3, text: 'Book', amount: -10 },
   { id: 4, text: 'Camera', amount: 150 },
 ];
 
 let transactions = dummyTransactions;
+
+// Add transaction
+const addTransaction = (e) => {
+  e.preventDefault();
+
+  if (text.value.trim() === '' || amount.value.trim() === '') {
+    error.style.display = 'block';
+  } else {
+    const transaction = {
+      id: generateID(),
+      text: text.value,
+      amount: +amount.value,
+    };
+
+    transactions.push(transaction);
+    addTransactionToDOM(transaction);
+    updateValues();
+    text.value = '';
+    amount.value = '';
+  }
+};
+
+// Generate random ID
+let generateID = () => Math.floor(Math.random() * 100000000);
 
 // Add transactions to DOM list
 const addTransactionToDOM = (transaction) => {
@@ -26,8 +51,10 @@ const addTransactionToDOM = (transaction) => {
 
   item.innerHTML = `
     ${transaction.text}
-    <span>${sign}${Math.abs(transaction.amount)}</span>
-    <button class="delete-btn">x</button>
+    <span>${sign}${Math.abs(transaction.amount).toFixed(2)}</span>
+    <button class="delete-btn" onclick="handleRemoveTransaction(${
+      transaction.id
+    })">x</button>
   `;
 
   list.appendChild(item);
@@ -54,6 +81,12 @@ const updateValues = () => {
   money_minus.innerText = `£${expenses}`;
 };
 
+// Remove transaction by ID
+const handleRemoveTransaction = (id) => {
+  transactions = transactions.filter((transaction) => transaction.id !== id);
+  init();
+};
+
 // Init app
 const init = () => {
   list.innerHTML = '';
@@ -62,3 +95,5 @@ const init = () => {
 };
 
 init();
+
+form.addEventListener('submit', addTransaction);
