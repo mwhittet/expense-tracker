@@ -7,14 +7,12 @@ const money_minus = document.getElementById('money-minus');
 const money_plus = document.getElementById('money-plus');
 const text = document.getElementById('text');
 
-const dummyTransactions = [
-  { id: 1, text: 'Flower', amount: -19.99 },
-  { id: 2, text: 'Salary', amount: 300 },
-  { id: 3, text: 'Book', amount: -10 },
-  { id: 4, text: 'Camera', amount: 150 },
-];
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem('transactions')
+);
 
-let transactions = dummyTransactions;
+let transactions =
+  localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
 
 // Add transaction
 const addTransaction = (e) => {
@@ -32,6 +30,7 @@ const addTransaction = (e) => {
     transactions.push(transaction);
     addTransactionToDOM(transaction);
     updateValues();
+    updateLocalStorage();
     text.value = '';
     amount.value = '';
   }
@@ -84,7 +83,13 @@ const updateValues = () => {
 // Remove transaction by ID
 const handleRemoveTransaction = (id) => {
   transactions = transactions.filter((transaction) => transaction.id !== id);
+  updateLocalStorage();
   init();
+};
+
+// Update local storage transactions
+const updateLocalStorage = () => {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
 };
 
 // Init app
